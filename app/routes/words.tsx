@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "remix";
-import { useLoaderData, Link } from "remix";
+import { useLoaderData, Link, Outlet } from "remix";
 import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
 
@@ -21,17 +21,18 @@ export default function Index() {
   return (
     <div>
       <h1>English words I learned</h1>
-      <ul>
-        {words.map((word) => (
-          <li key={word.id}>
-            <div>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <ul>
+          {words.map((word) => (
+            <li key={word.id}>
               <Link to={`/words/${word.id}`}>
                 {word.name} | {word.type}
               </Link>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+        <Outlet />
+      </div>
     </div>
   );
 }
