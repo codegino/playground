@@ -1,5 +1,9 @@
 import { redirect } from "remix";
 
-export function loader() {
-  return redirect("/words", 308);
+export default function Index() {
+  return (
+    <div>
+      <h1>Hello world</h1>
+    </div>
+  );
 }
