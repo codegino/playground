@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "remix";
+import { LoaderFunction, useTransition } from "remix";
 import { useLoaderData, Link, Outlet, useNavigate } from "remix";
 import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
@@ -16,6 +16,7 @@ export const loader: LoaderFunction = async () => {
 export default function Index() {
   const words = useLoaderData<Word[]>();
   const navigate = useNavigate();
+  let transition = useTransition();
 
   return (
     <div>
@@ -23,6 +24,7 @@ export default function Index() {
       <button type="button" onClick={() => navigate("/words/add")}>
         Add new word
       </button>
+      <div>Route State: {transition.state}</div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <ul>
           {words.map((word) => (

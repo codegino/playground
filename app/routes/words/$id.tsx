@@ -1,4 +1,10 @@
-import { Form, useLoaderData, redirect, useNavigate } from "remix";
+import {
+  Form,
+  useLoaderData,
+  redirect,
+  useNavigate,
+  useTransition,
+} from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
@@ -29,12 +35,14 @@ export const loader: LoaderFunction = async ({ params }) => {
 export default function Word() {
   const word = useLoaderData<Word>();
   const navigate = useNavigate();
+  let transition = useTransition();
 
   return (
     <div>
       <h3>
         {word.name} | {word.type}
       </h3>
+      <div>Form State: {transition.state}</div>
       {word.definitions.map((definition, i) => (
         <p key={i}>
           <i>{definition}</i>

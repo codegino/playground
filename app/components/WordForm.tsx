@@ -1,9 +1,12 @@
-import { Form } from "remix";
+import { Form, useTransition } from "remix";
 import { Word, WordType } from "~/models/word";
 
 export default function WordForm({ word }: { word?: Word }) {
+  let transition = useTransition();
+
   return (
     <Form method="post">
+      <div>Form State: {transition.state}</div>
       <div>
         <label htmlFor="name">Word</label>
         <input
