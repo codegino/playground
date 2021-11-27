@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "remix";
-import { useLoaderData, Link, Outlet } from "remix";
+import { useLoaderData, Link, Outlet, useNavigate } from "remix";
 import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
 
@@ -13,14 +13,14 @@ export const loader: LoaderFunction = async () => {
   return words;
 };
 
-// export const loader ...
-
 export default function Index() {
   const words = useLoaderData<Word[]>();
+  const navigate = useNavigate();
 
   return (
     <div>
       <h1>English words I learned</h1>
+      <button onClick={() => navigate("/words/add")}>Add new word</button>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <ul>
           {words.map((word) => (
