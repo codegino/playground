@@ -20,7 +20,9 @@ export default function Index() {
   return (
     <div>
       <h1>English words I learned</h1>
-      <button onClick={() => navigate("/words/add")}>Add new word</button>
+      <button type="button" onClick={() => navigate("/words/add")}>
+        Add new word
+      </button>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <ul>
           {words.map((word) => (

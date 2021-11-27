@@ -1,4 +1,4 @@
-import { Form, useLoaderData, redirect } from "remix";
+import { Form, useLoaderData, redirect, useNavigate } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
@@ -28,6 +28,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function Word() {
   const word = useLoaderData<Word>();
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -46,6 +47,9 @@ export default function Word() {
         <input type="hidden" name="_method" value="delete" />
         <button type="submit">Delete</button>
       </Form>
+      <button type="button" onClick={() => navigate(`/words/edit/${word.id}`)}>
+        Edit
+      </button>
     </div>
   );
 }
