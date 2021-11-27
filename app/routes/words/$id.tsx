@@ -1,6 +1,20 @@
-import { LoaderFunction, useLoaderData } from "remix";
+import { Form, useLoaderData, redirect } from "remix";
+import type { LoaderFunction, ActionFunction } from "remix";
 import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const formData = await request.formData();
+
+  if (formData.get("_method") === "delete") {
+    await supabase
+      .from<Word>("words")
+      .delete()
+      .eq("id", params.id as string);
+
+    return redirect("/words");
+  }
+};
 
 export const loader: LoaderFunction = async ({ params }) => {
   const { data } = await supabase
@@ -28,6 +42,10 @@ export default function Word() {
       {word.sentences.map((sentence, i) => (
         <p key={i}>{sentence}</p>
       ))}
+      <Form method="post">
+        <input type="hidden" name="_method" value="delete" />
+        <button type="submit">Delete</button>
+      </Form>
     </div>
   );
 }
