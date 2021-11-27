@@ -1,7 +1,5 @@
-export default function Index() {
-  return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
-  );
+import { redirect } from "remix";
+
+export function loader() {
+  return redirect("/words", 308);
 }
