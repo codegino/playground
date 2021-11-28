@@ -31,7 +31,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function EditWord() {
   const data = useLoaderData<Word>();
-  console.log(data);
 
   return <WordForm word={data} />;
 }
