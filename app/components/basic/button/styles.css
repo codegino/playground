@@ -1,0 +1,10 @@
+button[custom-button] {
+  display: block;
+  height: 2rem;
+  color: #000000;
+}
+
+button[custom-button="primary"] {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
