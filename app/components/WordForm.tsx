@@ -5,7 +5,7 @@ export default function WordForm({ word }: { word?: Word }) {
   let transition = useTransition();
 
   return (
-    <Form method="post">
+    <Form method="post" className="word-form">
       <div>Form State: {transition.state}</div>
       <div>
         <label htmlFor="name">Word</label>
