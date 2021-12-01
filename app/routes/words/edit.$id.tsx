@@ -1,17 +1,10 @@
 import { useLoaderData, redirect } from "remix";
 import type { LoaderFunction, ActionFunction, LinksFunction } from "remix";
-import WordForm from "~/components/WordForm";
+import { WordForm, links as formSyles } from "~/components/word-form";
 import { Word } from "~/models/word";
 import { supabase } from "~/libs/supabase-client";
 
-import sharedStyles from "~/styles/words/shared.css";
-
-export const links: LinksFunction = () => [
-  {
-    rel: "stylesheet",
-    href: sharedStyles,
-  },
-];
+export const links: LinksFunction = () => [...formSyles()];
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();

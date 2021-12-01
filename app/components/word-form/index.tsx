@@ -1,7 +1,16 @@
 import { Form, useTransition } from "remix";
 import { Word, WordType } from "~/models/word";
+import type { LinksFunction } from "remix";
+import styles from "./styles.css";
 
-export default function WordForm({ word }: { word?: Word }) {
+export const links: LinksFunction = () => [
+  {
+    rel: "stylesheet",
+    href: styles,
+  },
+];
+
+export function WordForm({ word }: { word?: Word }) {
   let transition = useTransition();
 
   return (
