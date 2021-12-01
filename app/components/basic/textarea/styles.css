@@ -1,0 +1,7 @@
+textarea[custom-textarea] {
+  height: 2rem;
+  width: 100%;
+  border-radius: 3px;
+  padding-left: 1ch;
+  padding-top: 1ch;
+}
