@@ -4,15 +4,19 @@ import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
 import type { LinksFunction } from "remix";
 import styles from "~/styles/words.css";
+import smStyles from "~/styles/words-sm.css";
 
-export const links: LinksFunction = () => {
-  return [
-    {
-      rel: "stylesheet",
-      href: styles,
-    },
-  ];
-};
+export const links: LinksFunction = () => [
+  {
+    rel: "stylesheet",
+    href: styles,
+  },
+  {
+    rel: "stylesheet",
+    href: smStyles,
+    media: "(max-width: 600px)",
+  },
+];
 
 export const loader: LoaderFunction = async () => {
   const { data: words } = await supabase
