@@ -2,6 +2,17 @@ import { Form, LoaderFunction, useTransition } from "remix";
 import { useLoaderData, Link, Outlet } from "remix";
 import { supabase } from "~/libs/supabase-client";
 import { Word } from "~/models/word";
+import type { LinksFunction } from "remix";
+import styles from "~/styles/words.css";
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: styles,
+    },
+  ];
+};
 
 export const loader: LoaderFunction = async () => {
   const { data: words } = await supabase
@@ -18,13 +29,13 @@ export default function Index() {
   let transition = useTransition();
 
   return (
-    <div>
+    <div className="words__page">
       <h1>English words I learned</h1>
       <Form method="get" action={"/words/add"}>
         <button type="submit">Add new word</button>
       </Form>
       <div>Route State: {transition.state}</div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+      <div className="words__content">
         <ul>
           {words.map((word) => (
             <li key={word.id}>
