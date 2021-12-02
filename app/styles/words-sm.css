@@ -1,8 +1,0 @@
-.words__content {
-  grid-template-columns: 1fr;
-  border: none;
-}
-
-.words__content form {
-  margin-top: 1rem;
-}

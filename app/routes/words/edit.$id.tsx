@@ -1,10 +1,8 @@
 import { useLoaderData, redirect } from "remix";
-import type { LoaderFunction, ActionFunction, LinksFunction } from "remix";
-import { WordForm, links as formSyles } from "~/components/word-form";
+import type { LoaderFunction, ActionFunction } from "remix";
+import WordForm from "~/components/WordForm";
 import { Word } from "~/models/word";
 import { supabase } from "~/libs/supabase-client";
-
-export const links: LinksFunction = () => [...formSyles()];
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();

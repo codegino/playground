@@ -8,24 +8,6 @@ import {
   useCatch,
 } from "remix";
 
-import type { LinksFunction } from "remix";
-import styles from "~/styles/global.css";
-import darkStyles from "~/styles/dark.css";
-
-export const links: LinksFunction = () => {
-  return [
-    {
-      rel: "stylesheet",
-      href: styles,
-    },
-    {
-      rel: "stylesheet",
-      href: darkStyles,
-      media: "(prefers-color-scheme: dark)",
-    },
-  ];
-};
-
 export default function App() {
   return (
     <Document>
