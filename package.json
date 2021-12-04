@@ -4,9 +4,13 @@
   "description": "",
   "license": "",
   "scripts": {
-    "build": "remix build",
+    "css:watch": "yarn css:build --watch",
+    "css:build": "postcss styles/**/*.css --dir app/styles",
+    "css:prod": "yarn css:build --env production",
     "dev": "remix dev",
-    "postinstall": "remix setup node"
+    "postinstall": "remix setup node",
+    "build": "yarn css:prod && remix build",
+    "prebuild": "rimraf ./public/build \"./app/styles/**/*.css\""
   },
   "dependencies": {
     "@remix-run/react": "^1.0.6",
