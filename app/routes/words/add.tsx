@@ -1,7 +1,7 @@
 import { redirect } from "remix";
 import type { ActionFunction } from "remix";
 import { supabase } from "~/libs/supabase-client";
-import WordForm from "~/components/WordForm";
+import { WordForm } from "~/components/word-form";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();

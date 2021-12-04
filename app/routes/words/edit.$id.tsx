@@ -1,6 +1,6 @@
 import { useLoaderData, redirect } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
-import WordForm from "~/components/WordForm";
+import { WordForm } from "~/components/word-form";
 import { Word } from "~/models/word";
 import { supabase } from "~/libs/supabase-client";
 
