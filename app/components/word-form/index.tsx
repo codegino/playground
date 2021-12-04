@@ -1,31 +1,25 @@
 import { Form, useTransition } from "remix";
 import { Word, WordType } from "~/models/word";
-import type { LinksFunction } from "remix";
-import { Button, links as buttonStyles } from "../basic/button";
-import { Input, links as inputStyles } from "../basic/input";
-import { Select, links as selectStyles } from "../basic/select";
-import { TextArea, links as textAreaStyles } from "../basic/textarea";
-import styles from "./styles.css";
-
-export const links: LinksFunction = () => [
-  ...buttonStyles(),
-  ...inputStyles(),
-  ...selectStyles(),
-  ...textAreaStyles(),
-  {
-    rel: "stylesheet",
-    href: styles,
-  },
-];
+import { Button } from "../basic/button";
+import { Input } from "../basic/input";
+import { Select } from "../basic/select";
+import { TextArea } from "../basic/textarea";
 
 export function WordForm({ word }: { word?: Word }) {
   let transition = useTransition();
 
   return (
-    <Form method="post" className="word-form">
+    <Form
+      method="post"
+      className={`
+        px-3 py-4 rounded flex flex-col gap-2 border-2
+      `}
+    >
       <div>Form State: {transition.state}</div>
       <div>
-        <label htmlFor="name">Word</label>
+        <label className="block text-xs" htmlFor="name">
+          Word
+        </label>
         <Input
           id="name"
           name="name"
@@ -37,7 +31,9 @@ export function WordForm({ word }: { word?: Word }) {
         />
       </div>
       <div>
-        <label htmlFor="type">Type</label>
+        <label className="block text-xs" htmlFor="type">
+          Type
+        </label>
         <Select
           id="type"
           name="type"
@@ -67,7 +63,9 @@ export function WordForm({ word }: { word?: Word }) {
 
 const SentenceField = ({ index, sentence }) => (
   <div>
-    <label htmlFor={`sentence.${index}`}>Sentence #{index}</label>
+    <label className="block text-xs" htmlFor={`sentence.${index}`}>
+      Sentence #{index}
+    </label>
     <TextArea
       id={`sentence.${index}`}
       name="sentence"
@@ -80,7 +78,9 @@ const SentenceField = ({ index, sentence }) => (
 
 const DefinitionField = ({ index, definition }) => (
   <div>
-    <label htmlFor={`definition.${index}`}>Definition #{index}</label>
+    <label className="block text-xs" htmlFor={`definition.${index}`}>
+      Definition #{index}
+    </label>
     <TextArea
       id={`definition.${index}`}
       name="definition"

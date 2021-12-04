@@ -7,21 +7,16 @@ import {
   ScrollRestoration,
   useCatch,
 } from "remix";
-
 import type { LinksFunction } from "remix";
-import styles from "~/styles/global.css";
-import darkStyles from "~/styles/dark.css";
+import tailwindStyles from "~/styles/tailwind.css";
+import appStyles from "~/styles/app.css";
 
-export const links: LinksFunction = () => {
+export let links: LinksFunction = () => {
   return [
+    { rel: "stylesheet", href: tailwindStyles },
     {
       rel: "stylesheet",
-      href: styles,
-    },
-    {
-      rel: "stylesheet",
-      href: darkStyles,
-      media: "(prefers-color-scheme: dark)",
+      href: appStyles,
     },
   ];
 };
