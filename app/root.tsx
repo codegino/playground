@@ -7,6 +7,19 @@ import {
   ScrollRestoration,
   useCatch,
 } from "remix";
+import type { LinksFunction } from "remix";
+import tailwindStyles from "~/styles/tailwind.css";
+import appStyles from "~/styles/app.css";
+
+export let links: LinksFunction = () => {
+  return [
+    { rel: "stylesheet", href: tailwindStyles },
+    {
+      rel: "stylesheet",
+      href: appStyles,
+    },
+  ];
+};
 
 export default function App() {
   return (
