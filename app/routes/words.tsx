@@ -1,10 +1,13 @@
-import { Form, LoaderFunction, useTransition } from "remix";
+import { Form, useTransition } from "remix";
+import type { LoaderFunction } from "remix";
 import { useLoaderData, Link, Outlet } from "remix";
 import { Button } from "~/components/basic/button";
-import { supabase } from "~/libs/supabase-client";
-import { Word } from "~/models/word";
+import { supabase } from "~/utils/supabase.server";
+import type { Word } from "~/models/word";
+import { useSupabase } from "~/utils/supabase-client";
 
 export const loader: LoaderFunction = async () => {
+  // No need to add auth here, because GET /words is public
   const { data: words } = await supabase
     .from<Word>("words")
     .select("id,name,type");
@@ -16,7 +19,8 @@ export const loader: LoaderFunction = async () => {
 
 export default function Index() {
   const words = useLoaderData<Word[]>();
-  let transition = useTransition();
+  const transition = useTransition();
+  const supabase = useSupabase();
 
   return (
     <main className="p-2">
@@ -34,14 +38,22 @@ export default function Index() {
               </li>
             ))}
           </ul>
-          <Form method="get" action={"/words/add"} className="pt-2">
-            <Button
-              type="submit"
-              className="hover:bg-primary-100 dark:hover:bg-primary-900"
-            >
-              Add new word
-            </Button>
-          </Form>
+          {supabase.auth.user() ? (
+            <Form method="get" action={"/words/add"} className="pt-2">
+              <Button
+                type="submit"
+                className="hover:bg-primary-100 dark:hover:bg-primary-900"
+              >
+                Add new word
+              </Button>
+            </Form>
+          ) : (
+            <Form method="get" action={`/auth`} className="flex">
+              <Button type="submit" color="primary" className="w-full">
+                Sign-in to make changes
+              </Button>
+            </Form>
+          )}
         </div>
         <Outlet />
       </div>
