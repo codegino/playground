@@ -7,12 +7,14 @@ import {
   ScrollRestoration,
   useCatch,
   useLoaderData,
+  useSubmit,
 } from "remix";
 import type { LinksFunction } from "remix";
 import tailwindStyles from "~/styles/tailwind.css";
 import appStyles from "~/styles/app.css";
 import { createClient } from "@supabase/supabase-js";
-import { SupabaseProvider } from "./utils/supabase-client";
+import { SupabaseProvider, useSupabase } from "./utils/supabase-client";
+import { Button } from "./components/basic/button";
 
 export let links: LinksFunction = () => {
   return [
@@ -74,7 +76,27 @@ function Document({
 }
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
-  return <main>{children}</main>;
+  const submit = useSubmit();
+  const supabase = useSupabase();
+
+  const handleSignOut = () => {
+    supabase.auth.signOut().then(() => {
+      submit(null, { method: "post", action: "/signout" });
+    });
+  };
+
+  return (
+    <main>
+      <header>
+        {supabase.auth.session() && (
+          <Button type="button" onClick={handleSignOut}>
+            Sign out
+          </Button>
+        )}
+      </header>
+      {children}
+    </main>
+  );
 }
 
 export function CatchBoundary() {
