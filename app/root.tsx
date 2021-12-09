@@ -6,10 +6,13 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useLoaderData,
 } from "remix";
 import type { LinksFunction } from "remix";
 import tailwindStyles from "~/styles/tailwind.css";
 import appStyles from "~/styles/app.css";
+import { createClient } from "@supabase/supabase-js";
+import { SupabaseProvider } from "./utils/supabase-client";
 
 export let links: LinksFunction = () => {
   return [
@@ -21,12 +24,25 @@ export let links: LinksFunction = () => {
   ];
 };
 
+export const loader = () => {
+  return {
+    supabaseKey: process.env.SUPABASE_ANON_KEY,
+    supabaseUrl: process.env.SUPABASE_URL,
+  };
+};
+
 export default function App() {
+  const loader = useLoaderData();
+
+  const supabase = createClient(loader.supabaseUrl, loader.supabaseKey);
+
   return (
     <Document>
-      <Layout>
-        <Outlet />
-      </Layout>
+      <SupabaseProvider supabase={supabase}>
+        <Layout>
+          <Outlet />
+        </Layout>
+      </SupabaseProvider>
     </Document>
   );
 }
