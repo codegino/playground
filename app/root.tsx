@@ -1,4 +1,5 @@
 import {
+  ErrorBoundaryComponent,
   Links,
   LiveReload,
   Meta,
@@ -88,7 +89,7 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
   return (
     <main>
       <header>
-        {supabase.auth.session() && (
+        {supabase?.auth?.session() && (
           <Button type="button" onClick={handleSignOut}>
             Sign out
           </Button>
@@ -99,6 +100,17 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
   );
 }
 
+export const ErrorBoundary: ErrorBoundaryComponent = ({ error }) => {
+  return (
+    <Document>
+      <Layout>
+        <p>An error has occur</p>
+        <p>{error.message}</p>
+      </Layout>
+    </Document>
+  );
+};
+
 export function CatchBoundary() {
   let caught = useCatch();
 
@@ -108,8 +120,9 @@ export function CatchBoundary() {
       message = <p>This is a custom error message for 404 pages</p>;
       break;
     // You can customize the behavior for other status codes
-    default:
-      throw new Error(caught.data || caught.statusText);
+    default: {
+      throw new Error(JSON.stringify(caught.data) || caught.statusText);
+    }
   }
 
   return (
