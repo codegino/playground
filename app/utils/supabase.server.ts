@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { createCookieSessionStorage } from "remix";
+import { createCookieSessionStorage, json } from "remix";
 
 const supabaseUrl = process.env.SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_ANON_KEY as string;
@@ -28,7 +28,17 @@ export { getSession, commitSession, destroySession };
 export const setAuthToken = async (request: Request) => {
   let session = await getSession(request.headers.get("Cookie"));
 
-  supabase.auth.setAuth(session.get("access_token"));
+  const accessToken = session.get("access_token");
 
-  return session;
+  if (accessToken) {
+    supabase.auth.setAuth(accessToken);
+    return session;
+  } else {
+    throw json(
+      {
+        message: "Please login",
+      },
+      { status: 401 }
+    );
+  }
 };

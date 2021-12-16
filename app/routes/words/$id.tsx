@@ -1,10 +1,11 @@
-import { Form, useLoaderData, redirect, useTransition } from "remix";
+import { Form, useLoaderData, redirect, useTransition, json } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import type { Word } from "~/models/word";
 import { Input } from "~/components/basic/input";
 import { Button } from "~/components/basic/button";
 import { setAuthToken, supabase } from "~/utils/supabase.server";
 import { useSupabase } from "~/utils/supabase-client";
+import { WordsErrorBoundary } from "~/components/WordsErrorBoundary";
 
 // Here's the action to handle deletion
 export const action: ActionFunction = async ({ request, params }) => {
@@ -31,8 +32,16 @@ export const loader: LoaderFunction = async ({ params }) => {
     .eq("id", params.id as string)
     .single();
 
+  if (!data) {
+    throw json({ message: "Word could not be found" }, 404);
+  }
+
   return data;
 };
+
+export function CatchBoundary() {
+  return <WordsErrorBoundary />;
+}
 
 export default function Word() {
   const word = useLoaderData<Word>();
