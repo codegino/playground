@@ -1,8 +1,8 @@
 import { useLoaderData, redirect } from "remix";
 import type { LoaderFunction, ActionFunction } from "remix";
 import { WordForm } from "~/components/word-form";
-import { Word } from "~/models/word";
-import { supabase } from "~/libs/supabase-client";
+import type { Word } from "~/models/word";
+import { setAuthToken, supabase } from "~/utils/supabase.server";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
@@ -13,6 +13,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     sentences: formData.getAll("sentence"),
     definitions: formData.getAll("definition"),
   };
+
+  // Auth Related Code
+  await setAuthToken(request);
 
   await supabase.from("words").update(updates).eq("id", id);
 
