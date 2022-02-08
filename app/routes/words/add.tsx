@@ -2,6 +2,7 @@ import { redirect } from "remix";
 import type { ActionFunction } from "remix";
 import { setAuthToken, supabase } from "~/utils/supabase.server";
 import { WordForm } from "~/components/word-form";
+import { WordsErrorBoundary } from "~/components/WordsErrorBoundary";
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData();
@@ -31,4 +32,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function AddWord() {
   return <WordForm />;
+}
+
+export function CatchBoundary() {
+  return <WordsErrorBoundary />;
 }
