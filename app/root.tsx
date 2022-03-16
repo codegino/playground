@@ -16,6 +16,14 @@ import appStyles from "~/styles/app.css";
 import { createClient } from "@supabase/supabase-js";
 import { SupabaseProvider, useSupabase } from "./utils/supabase-client";
 import { Button } from "./components/basic/button";
+import type { MetaFunction } from "remix";
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Home | Code Gino Playground",
+    description: "Web application to showcase the power of Remix",
+  };
+};
 
 export let links: LinksFunction = () => {
   return [

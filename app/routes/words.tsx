@@ -5,6 +5,7 @@ import { Button } from "~/components/basic/button";
 import { supabase } from "~/utils/supabase.server";
 import type { Word } from "~/models/word";
 import { useSupabase } from "~/utils/supabase-client";
+import type { MetaFunction } from "remix";
 
 export const loader: LoaderFunction = async () => {
   // No need to add auth here, because GET /words is public
@@ -15,6 +16,13 @@ export const loader: LoaderFunction = async () => {
   // We can pick and choose what we want to display
   // This can solve the issue of over-fetching or under-fetching
   return words;
+};
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Words Page | Code Gino",
+    description: "List of English words I learned",
+  };
 };
 
 export default function Index() {
